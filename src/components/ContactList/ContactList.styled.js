@@ -6,7 +6,7 @@ export const List = styled('ul')(() => {
     marginRight: 'auto',
     display: 'flex',
     flexDirection: 'column',
-    width: 350,
+    width: 450,
     '& li': {
       display: 'flex',
       justifyContent: 'space-between',

@@ -1,15 +1,25 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Form } from './ContactForm.styled';
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { createContactAction } from 'redux/contacts/contactsSlice';
-import { getContacts } from 'redux/selectors';
+import { addNewContact, getAllContacts } from 'redux/contacts/contactsSlice';
+import { selectorContacts } from 'redux/selectors';
 
 const ContactForm = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
-    const { contacts } = useSelector(getContacts);
-    const dispatch = useDispatch();
+  const [alreadyLoaded, setAlreadyLoaded] = useState(false);
+  const { items } = useSelector(selectorContacts);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (!alreadyLoaded) {
+      dispatch(getAllContacts());
+      setAlreadyLoaded(true);
+      console.log('useEffect');
+    }
+  }, [dispatch, alreadyLoaded, items]);
+  
 
   const handleChange = ({ target: { value, name } }) => {
     switch (name) {
@@ -30,12 +40,14 @@ const ContactForm = () => {
 
   const handleSubmit = evt => {
     evt.preventDefault();
-    const isAlreadyExist = contacts.find(
+    const isAlreadyExist = items.find(
       el => el.name.toLowerCase() === name.toLowerCase()
     );
-    if (isAlreadyExist)
-      return alert(`${name} is already in contacts`);
-    dispatch(createContactAction({ name, number }));
+    if (isAlreadyExist) {
+      alert(`${name} is already in contacts`);
+    } else {
+      dispatch(addNewContact({ name, number }));
+    }
     setName('');
     setNumber('');
   };
@@ -62,7 +74,7 @@ const ContactForm = () => {
           autoComplete="off"
           type="tel"
           name="number"
-          pattern="^(\+?[0-9 \(\)\-]+)$"
+          pattern="^(\+?[0-9 \(\)\-\.х]+)$"
           placeholder="+38(097)862-31-45"
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           required

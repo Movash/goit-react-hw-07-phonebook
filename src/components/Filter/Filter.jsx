@@ -1,15 +1,15 @@
 import React from 'react';
 import { FilterCont } from './Filter.styled';
 import { useDispatch, useSelector } from 'react-redux';
-import { saveFilter } from 'redux/filter/filterSlice';
-import { getFilter } from 'redux/selectors';
+import { setFilter } from 'redux/filter/filterSlice';
+import { selectorFilter } from 'redux/selectors';
 
 const Filter = () => {
-  const { filter } = useSelector(getFilter);
+  const { filter } = useSelector(selectorFilter);
   const dispatch = useDispatch();
 
   const handleChangeFilter = ({ target: { value } }) => {
-    dispatch(saveFilter(value));
+    dispatch(setFilter(value));
   };
   return (
     <FilterCont>
