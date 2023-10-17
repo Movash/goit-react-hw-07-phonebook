@@ -1,14 +1,14 @@
-import Filter from './Filter/Filter';
-import ContactForm from './ContactForm/ContactForm';
-import ContactList from './ContactList/ContactList';
-import { AppCont } from './../App.styled';
-import Loader from './Loader/Loader';
-import Error from './Error/Error';
+import Filter from './Filter';
+import Contact from './Contact';
+import ContactList from './ContactList';
+import { AppCont } from './App.styled';
+import Loader from './Loader';
+import Error from './Error';
 
 const App = () => (
     <AppCont>
       <h1>Phonebook</h1>
-      <ContactForm />
+      <Contact />
       <h2>Contacts</h2>
       <Filter />
       <Error />
